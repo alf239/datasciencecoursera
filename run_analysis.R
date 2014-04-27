@@ -30,10 +30,14 @@ for (i in 1:nrow(labels)) {
 }
 
 # 4. Appropriately labels the data set with descriptive activity names. 
-X <- cbind(y, X)
-final_result <- cbind(y, mean_and_std)
+X_with_labels <- cbind(y, X)
+mean_and_std_with_labels <- cbind(y, mean_and_std)
 
-# 5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
-averages <- aggregate(X[,2:length(X)], by = list(activity = X$activity), mean)
+# 5. Creates a second, independent tidy data set with the average of each variable 
+#    for each activity and each subject. 
+subject_test <- read.table("./UCI HAR Dataset/test/subject_test.txt", col.names = c('subject'))
+subject_train <- read.table("./UCI HAR Dataset/train/subject_train.txt", col.names = c('subject'))
+subject <- rbind(subject_test, subject_train)
+averages <- aggregate(X, by = list(activity = X$activity, subject = subject[,1]), mean)
 
 write.csv(averages, file='assignment/result.txt', row.names=FALSE)
