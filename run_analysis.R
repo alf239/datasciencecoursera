@@ -38,6 +38,6 @@ mean_and_std_with_labels <- cbind(y, mean_and_std)
 subject_test <- read.table("./UCI HAR Dataset/test/subject_test.txt", col.names = c('subject'))
 subject_train <- read.table("./UCI HAR Dataset/train/subject_train.txt", col.names = c('subject'))
 subject <- rbind(subject_test, subject_train)
-averages <- aggregate(X, by = list(activity = X$activity, subject = subject[,1]), mean)
+averages <- aggregate(X, by = list(activity = y[,1], subject = subject[,1]), mean)
 
 write.csv(averages, file='assignment/result.txt', row.names=FALSE)
